@@ -9,8 +9,8 @@ import CustomeSlider from "../custom/Slider/CustomeSlider";
 const FilterPanel = ({
   selectedCategory,
   selectToggle,
+  selectedRating,
   selectRating,
-  selectRatingToggle,
   cusineOptions,
   changeChecked,
   selectedPrice,
@@ -34,8 +34,8 @@ const FilterPanel = ({
           <CardHeader title="Star rating" />
           <CustomeFilterToggle
             options={ratingList}
-            value={selectRating}
-            selectToggle={selectRatingToggle}
+            value={selectedRating}
+            selectToggle={selectRating}
           />
         </CardContent>
       </Card>

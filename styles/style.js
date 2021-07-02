@@ -77,7 +77,7 @@ export default makeStyles((theme) => ({
   ////////////////////////////////////
 
   //CustomeCheckbox.jsx start
-  chekboxMainDiv: {
+  chekboxRoot: {
     '&$checked': {
       color: '#000',
     },
@@ -113,4 +113,27 @@ export default makeStyles((theme) => ({
   },
   //CustomeSlider.jsx end
   /////////////////////////////////
+
+  //ListItem.jsx
+  // toolbar: theme.mixins.toolbar,
+  // content: {
+  //   flexGrow: 1,
+  //   backgroundColor: theme.palette.background.default,
+  //   padding: theme.spacing(3),
+  // },
+  listItemMainDiv: {
+    marginTop: "40px",
+    maxWidth: "90%",
+  },
+  listItemMedia: {
+    height: "300px",
+    // paddingTop: '36.25%', // 16:9
+  },
+  ratingAvatar: {
+    backgroundColor: "red",
+  },
+  cardFooter: {
+    display: "flex",
+    justifyContent: "space-around"
+  }
 }));

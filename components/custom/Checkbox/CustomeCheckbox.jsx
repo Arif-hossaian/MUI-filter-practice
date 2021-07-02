@@ -8,10 +8,6 @@ const CustomeCheckbox = ({cuisine, changeChecked}) => {
   return (
     <div>
       <FormControlLabel
-        classes={{
-          label: classes.label,
-          chekboxMainDiv: classes.wrap,
-        }}
         control={
           <Checkbox
             classes={{

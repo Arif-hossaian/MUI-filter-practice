@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar/SearchBar";
 import FilterPanel from "./FilterPanle/FilterPanel";
 import PlaceList from "./PlaceList/List";
@@ -10,6 +10,7 @@ const Layout = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([1000, 5000]);
   const [list, setList] = useState(dataList);
+  const [resultsFound, setResultsFound] = useState(true);
   const [cusineOptions, setCusineOptions] = useState([
     {
       id: 1,
@@ -45,25 +46,41 @@ const Layout = () => {
     setCusineOptions(changeCheckCuisies);
   };
   const handleChangePrice = (event, value) => setSelectedPrice(value);
+  const applyFilters = () => {
+    let updatedList = dataList;
+
+    // Rating Filter
+    if (selectedRating) {
+      updatedList = updatedList.filter(
+        (item) => parseInt(item.rating) === parseInt(selectedRating)
+      );
+    }
+
+    setList(updatedList);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedRating, selectedCategory, selectedPrice]);
 
   return (
     <>
       <SearchBar />
       <Container>
         <Grid container spacing={3}>
-          <Grid item md={4}>
+          <Grid item xs={12} md={4}>
             <FilterPanel
               selectToggle={handleSelectCategory}
               selectedCategory={selectedCategory}
+              selectedRating={selectedRating}
               selectRating={handleSelectRating}
-              selectRatingToggle={selectedRating}
               cusineOptions={cusineOptions}
               changeChecked={handleChangeChecked}
               selectedPrice={selectedPrice}
               changedPrice={handleChangePrice}
             />
           </Grid>
-          <Grid item md={8}>
+          <Grid item xs={12} md={8}>
             <PlaceList list={list} />
           </Grid>
         </Grid>
