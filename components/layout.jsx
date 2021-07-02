@@ -10,6 +10,7 @@ const Layout = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([1000, 5000]);
   const [list, setList] = useState(dataList);
+  const [inputSearch, setInputSearch] = useState();
   const [resultsFound, setResultsFound] = useState(true);
   const [cusineOptions, setCusineOptions] = useState([
     {
@@ -55,20 +56,61 @@ const Layout = () => {
         (item) => parseInt(item.rating) === parseInt(selectedRating)
       );
     }
+    //Category filter
+    if (selectedCategory) {
+      updatedList = updatedList.filter(
+        (item) => item.category === selectedCategory
+      );
+    }
+    //Cusine checkbox
+    const cuisinesChecked = cusineOptions
+      .filter((item) => item.checked)
+      .map((item) => item.label.toLowerCase());
+
+    if (cuisinesChecked.length) {
+      updatedList = updatedList.filter((item) =>
+        cuisinesChecked.includes(item.cuisine)
+      );
+    }
+    //price filter
+    const minPrice = selectedPrice[0];
+    const maxPrice = selectedPrice[1];
+
+    updatedList = updatedList.filter(
+      (item) => item.price >= minPrice && item.price <= maxPrice
+    );
+    //Search Input
+    if (inputSearch) {
+      updatedList = updatedList.filter(
+        (item) =>
+          item.title.toLowerCase().search(inputSearch.toLowerCase().trim()) !==
+          -1
+      );
+    }
 
     setList(updatedList);
   };
 
   useEffect(() => {
     applyFilters();
-  }, [selectedRating, selectedCategory, selectedPrice]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    selectedRating,
+    selectedCategory,
+    cusineOptions,
+    selectedPrice,
+    inputSearch,
+  ]);
 
   return (
     <>
-      <SearchBar />
+      <SearchBar
+        value={inputSearch}
+        changeInput={(e) => setInputSearch(e.target.value)}
+      />
       <Container>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={4}>
             <FilterPanel
               selectToggle={handleSelectCategory}
               selectedCategory={selectedCategory}
@@ -80,7 +122,7 @@ const Layout = () => {
               changedPrice={handleChangePrice}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} sm={8}>
             <PlaceList list={list} />
           </Grid>
         </Grid>

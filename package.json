@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "next build && next export",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
